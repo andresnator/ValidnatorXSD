@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidnatorXSD", "ValidnatorXSD.csproj", "{FC2E02AB-598D-49F7-BA95-AC658ED7005F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidnatorXSDTest", "..\ValidnatorXSDTest\ValidnatorXSDTest.csproj", "{C47221E9-DA75-4726-BB92-CC67AB27E970}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibValidadorXSD", "..\LibValidadorXSD\LibValidadorXSD.csproj", "{9FCA8E95-A88A-4524-B665-D6A4595058F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibData", "..\LibData\LibData.csproj", "{47F46D4D-8730-4C7F-81AE-8FD53D15C4E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2B116FB-A50C-4CDF-BE95-37037BADFF9B}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC2E02AB-598D-49F7-BA95-AC658ED7005F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC2E02AB-598D-49F7-BA95-AC658ED7005F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC2E02AB-598D-49F7-BA95-AC658ED7005F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC2E02AB-598D-49F7-BA95-AC658ED7005F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C47221E9-DA75-4726-BB92-CC67AB27E970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C47221E9-DA75-4726-BB92-CC67AB27E970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C47221E9-DA75-4726-BB92-CC67AB27E970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C47221E9-DA75-4726-BB92-CC67AB27E970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FCA8E95-A88A-4524-B665-D6A4595058F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FCA8E95-A88A-4524-B665-D6A4595058F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FCA8E95-A88A-4524-B665-D6A4595058F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FCA8E95-A88A-4524-B665-D6A4595058F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F46D4D-8730-4C7F-81AE-8FD53D15C4E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F46D4D-8730-4C7F-81AE-8FD53D15C4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F46D4D-8730-4C7F-81AE-8FD53D15C4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F46D4D-8730-4C7F-81AE-8FD53D15C4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

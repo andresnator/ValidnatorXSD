@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2" id="idTipoCargaDistribucionEnt">
+  <xsd:annotation>
+    <xsd:documentation>Estructura XSD para carga de distribuciones de transferencia del sistema Regalías - SPGR. Acepta valores negativos</xsd:documentation>
+  </xsd:annotation>
+  <xsd:element name="cargaDistribucionEnt">
+    <xsd:annotation>
+      <xsd:documentation>La Combinación de Año, Mes, Código DANE y Código Fondo se repite en el archivo de entrada de la Carga XML de Distribuciones de Transferencia</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="itemDistribucion" type="tipoItemDistribucion" maxOccurs="40000">
+          <xsd:annotation>
+            <xsd:documentation>Elemento complejo contenedor del detalle de cada ítem de distribución de transferencia</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+    <xsd:unique name="LlaveItemDistribucion">
+      <xsd:selector xpath="itemDistribucion"/>
+      <xsd:field xpath="ano"/>
+      <xsd:field xpath="codMes"/>
+      <xsd:field xpath="codDANE"/>
+      <xsd:field xpath="codFondo"/>
+    </xsd:unique>
+  </xsd:element>
+  <xsd:complexType name="tipoItemDistribucion">
+    <xsd:annotation>
+      <xsd:documentation>Tipo complejo contenedor del detalle de cada ítem perteniente a la lista de distribuciones de transferencia</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="codDANE" type="tipoCodDANE">
+        <xsd:annotation>
+          <xsd:documentation>Código otorgado por el DANE</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codFondo" type="tipoCodFondo">
+        <xsd:annotation>
+          <xsd:documentation>Código que identifica el Fondo</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ano" type="tipoAno">
+        <xsd:annotation>
+          <xsd:documentation>Año de la Distribución</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codMes" type="tipoMes">
+        <xsd:annotation>
+          <xsd:documentation>Mes de la Distribución</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="valor" type="tipoCantidadMonetaria">
+        <xsd:annotation>
+          <xsd:documentation>Valor de la Distribución</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="TipoDocumento" type="tipoDocumento">
+        <xsd:annotation>
+          <xsd:documentation>Tipo de Documento de la Distribución</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="tipoCodDANE">
+    <xsd:annotation>
+      <xsd:documentation>El Código DANE corresponde a la identificación de una relación de entidad territorial Alfanumérica con máximo 8 caracteres</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-Za-z0-9]{1,8}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tipoCodFondo">
+    <xsd:annotation>
+      <xsd:documentation>El Código de Fondo corresponde a la identificación de una relación de entidad territorial Alfanumérica con máximo 5 caracteres</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-Za-z0-9]{1,5}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tipoMes">
+    <xsd:annotation>
+      <xsd:documentation>El mes corresponde a dos posiciones numericas con valores de 01 - 12</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="(0[1-9]|1[0-2])"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tipoAno">
+    <xsd:annotation>
+      <xsd:documentation>El año corresponde a 4 posiciones numericas</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="4"/>
+      <xsd:maxLength value="4"/>
+      <xsd:pattern value="[0-9]{4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tipoCantidadMonetaria">
+    <xsd:annotation>
+      <xsd:documentation>El Valor de la Distribución corresponde a valores positivos con 2 decimales. Acepta valores negativos</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:totalDigits value="17"/>
+      <xsd:maxInclusive value="999999999999999.99"/>
+      <xsd:fractionDigits value="2"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="tipoDocumento">
+    <xsd:annotation>
+      <xsd:documentation>El Tipo de Documento corresponde a 4 posiciones alfanumericas</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[A-Za-z0-9]{1,4}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>
