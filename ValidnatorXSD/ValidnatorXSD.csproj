@@ -42,7 +42,10 @@
   <ItemGroup>
     <Compile Include="Const\EnumsValidatorXSD.cs" />
     <Compile Include="DTO\ConfigDTO.cs" />
+    <Compile Include="Fabrics\GetFileXmlFabric.cs" />
+    <Compile Include="Fabrics\GetFileXmlTxt.cs" />
     <Compile Include="IC\IConfig.cs" />
+    <Compile Include="IC\IGetFileXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidnatorXSD.cs" />
   </ItemGroup>
