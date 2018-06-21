@@ -16,8 +16,8 @@ namespace LibValidadorXSD
     public class Program
     {
         private static readonly Program Instance = null;
-        private ContextValidadorBd _context;
         private readonly List<Resultados> _resultadosList = new List<Resultados>();
+        private ContextValidadorBd _context;
         public static Program ProgramSingleton => Instance ?? new Program();
 
 
@@ -40,8 +40,7 @@ namespace LibValidadorXSD
         private string ObtenerArchivoXml(ArchivosProgramados archivoProgramado)
         {
             string[] data = File
-                .ReadAllLines(Path.
-                    Combine(archivoProgramado.UrlArchivoCargado),
+                .ReadAllLines(Path.Combine(archivoProgramado.UrlArchivoCargado),
                     Encoding.UTF8); // datos leidos del archivo
             //var data = File.ReadAllLines(archivoProgramado.UrlArchivoCargado);// datos leidos del archivo
 
@@ -140,7 +139,8 @@ namespace LibValidadorXSD
         /// <returns></returns>
         private bool ValidarProgramados(ArchivosProgramados archivoProgramado)
         {
-            ContrastarSchema(ConstruirSchema(archivoProgramado), ObtenerArchivoXml(archivoProgramado),archivoProgramado);
+            ContrastarSchema(ConstruirSchema(archivoProgramado), ObtenerArchivoXml(archivoProgramado),
+                archivoProgramado);
             //File.WriteAllLines(Path.Combine(archivoProgramado.UrlArchivoCargado.Replace(".txt", "_error.txt")), _resultadoList.ToArray());
 
             Task.Factory.StartNew(RegistrarErrores).Wait();

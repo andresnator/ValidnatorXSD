@@ -92,12 +92,6 @@
     <Compile Include="ValidadorXML.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LibData\LibData.csproj">
-      <Project>{47f46d4d-8730-4c7f-81ae-8fd53d15c4e6}</Project>
-      <Name>LibData</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +106,12 @@
     <None Include="XMLSchemaPruebas.xsd">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibData\LibData.csproj">
+      <Project>{47f46d4d-8730-4c7f-81ae-8fd53d15c4e6}</Project>
+      <Name>LibData</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
