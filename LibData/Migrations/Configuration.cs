@@ -1,15 +1,16 @@
+using System.Data.Entity.Migrations;
+using LibData.Models;
+
 namespace LibData.Migrations
 {
-    using System.Data.Entity.Migrations;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<Models.ContextValidadorBd>
+    internal sealed class Configuration : DbMigrationsConfiguration<ContextValidadorBd>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Models.ContextValidadorBd context)
+        protected override void Seed(ContextValidadorBd context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 
-
 namespace LibData.Models
 {
     public class ContextValidadorBd : DbContext
@@ -14,7 +13,6 @@ namespace LibData.Models
         public ContextValidadorBd()
             : base("name=ContextDB")
         {
-
             //Configuration.LazyLoadingEnabled = false;
             Configuration.LazyLoadingEnabled = false;
             Configuration.ProxyCreationEnabled = false;
@@ -39,8 +37,6 @@ namespace LibData.Models
         public DbSet<ErroresArchivos> ErroresArchivos { get; set; }
 
 
-
-
         protected void Seed(ContextValidadorBd context)
         {
             //  This method will be called after migrating to the latest version.
@@ -57,18 +53,14 @@ namespace LibData.Models
             //
 
             SeedInicial(context);
-
         }
 
 
         public void SeedInicial(ContextValidadorBd context)
         {
-
-
             //context.Archivos.AddOrUpdate(
             //    new Archivo { ArchivoId = 1, CantidadColumnas = 10, Descripcion = "Prueba", Nombre = "Andres", Separador = "|" }
             //    );
         }
-
     }
 }

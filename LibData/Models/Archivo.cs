@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace LibData.Models
 {
     [Table("Archivo", Schema = "VLD")]
@@ -21,7 +20,8 @@ namespace LibData.Models
 
         public long ArchivoId { get; set; }
 
-        [Required(ErrorMessage = "Campo requerido"), StringLength(50, ErrorMessage = "Cantidad Máxima de 50 caracteres")]
+        [Required(ErrorMessage = "Campo requerido")]
+        [StringLength(50, ErrorMessage = "Cantidad Máxima de 50 caracteres")]
         [Column(TypeName = "varchar")]
         [Display(Name = "Nombre archivo", Description = "Nombre del archivo")]
         public string Nombre { get; set; }
@@ -34,8 +34,9 @@ namespace LibData.Models
         [Column(TypeName = "int")]
         [Display(Name = "Cantidad de columnas", Description = "Numero de columnas")]
         public int CantidadColumnas { get; set; }
-        
-        [Required(ErrorMessage = "Campo Requerido"), StringLength(5, ErrorMessage = "Cantidad Máxima de 5 caracteres")]
+
+        [Required(ErrorMessage = "Campo Requerido")]
+        [StringLength(5, ErrorMessage = "Cantidad Máxima de 5 caracteres")]
         public string Separador { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
@@ -59,6 +60,5 @@ namespace LibData.Models
         public List<ArchivosProgramados> ArchivosProgramados { get; set; }
 
         #endregion
-
     }
 }

@@ -15,16 +15,19 @@ namespace LibData.Models
 
         #region Columnas
 
-
         public long ColumnaId { get; set; }
 
 
-        [Required(ErrorMessage = "Campo Requerido"), StringLength(20, ErrorMessage = "Cantidad Máxima de 20 caracteres")]
-        [Column(TypeName = "varchar"), Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Campo Requerido")]
+        [StringLength(20, ErrorMessage = "Cantidad Máxima de 20 caracteres")]
+        [Column(TypeName = "varchar")]
+        [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "Campo Requerido"), StringLength(1024, ErrorMessage = "Cantidad Máxima de 1024 caracteres")]
-        [Column(TypeName = "varchar"), Display(Name = "Descripción")]
+        [Required(ErrorMessage = "Campo Requerido")]
+        [StringLength(1024, ErrorMessage = "Cantidad Máxima de 1024 caracteres")]
+        [Column(TypeName = "varchar")]
+        [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 
         //[Required(ErrorMessage = "Campo Requerido")]
@@ -47,18 +50,13 @@ namespace LibData.Models
 
         #region Relaciones
 
-        
         public long? RestriccionesColumnaId { get; set; }
         public RestriccionesColumna RestriccionesColumna { get; set; }
 
-        
+
         public long ArchivoId { get; set; }
         public Archivo Archivo { get; set; }
-        
 
         #endregion
-
-
-
     }
 }

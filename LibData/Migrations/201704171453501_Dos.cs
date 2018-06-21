@@ -1,21 +1,20 @@
+using System.Data.Entity.Migrations;
+
 namespace LibData.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class Dos : DbMigration
     {
         public override void Up()
         {
-            AddColumn("VLD.Columna", "ArchivoId", c => c.Long(nullable: false));
+            AddColumn("VLD.Columna", "ArchivoId", c => c.Long(false));
             CreateIndex("VLD.Columna", "ArchivoId");
-            AddForeignKey("VLD.Columna", "ArchivoId", "VLD.Archivo", "ArchivoId", cascadeDelete: false);
+            AddForeignKey("VLD.Columna", "ArchivoId", "VLD.Archivo", "ArchivoId", false);
         }
-        
+
         public override void Down()
         {
             DropForeignKey("VLD.Columna", "ArchivoId", "VLD.Archivo");
-            DropIndex("VLD.Columna", new[] { "ArchivoId" });
+            DropIndex("VLD.Columna", new[] {"ArchivoId"});
             DropColumn("VLD.Columna", "ArchivoId");
         }
     }

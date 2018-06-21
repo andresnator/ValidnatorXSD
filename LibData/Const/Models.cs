@@ -2,25 +2,19 @@
 {
     public class Models
     {
-
-        public static decimal MinOccurs { get; set; } = 1;
-        public static decimal MaxOccurs { get; set; } = 1000000;
-
-        public enum ETipoDato
+        public enum EEstadosArchivos
         {
-            Entero = 1,
-            String = 2,
-            Decimal = 3,
-            Date = 4
+            Programado,
+            EnEjecucion,
+            Terminado
         }
 
 
-        public static readonly string[] DateFormato =
+        public enum EEstadosValidacion
         {
-            "dd/mm/aaaa",
-            "aaaammdd",
-            "mmddaaaa"
-        };
+            ConErrores,
+            SinErrores
+        }
 
 
         public enum EOperadoresAritmeticos
@@ -48,21 +42,23 @@
             Diferente = '!'
         }
 
-
-
-
-        public enum EEstadosArchivos
+        public enum ETipoDato
         {
-            Programado,
-            EnEjecucion,
-            Terminado
+            Entero = 1,
+            String = 2,
+            Decimal = 3,
+            Date = 4
         }
 
 
-        public enum EEstadosValidacion
+        public static readonly string[] DateFormato =
         {
-            ConErrores,
-            SinErrores
-        }
+            "dd/mm/aaaa",
+            "aaaammdd",
+            "mmddaaaa"
+        };
+
+        public static decimal MinOccurs { get; set; } = 1;
+        public static decimal MaxOccurs { get; set; } = 1000000;
     }
 }

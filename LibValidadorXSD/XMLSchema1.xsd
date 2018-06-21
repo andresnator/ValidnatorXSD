@@ -1,5 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2" id="idTipoCargaOtrosRecursosEnt">
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2"
+            id="idTipoCargaOtrosRecursosEnt">
   <xsd:annotation>
     <xsd:documentation>Estructura XSD para carga de otros recursos de gastos y de ingresos a la  programación presupuestal del sistema - SPGR</xsd:documentation>
   </xsd:annotation>
@@ -49,7 +51,7 @@
       <xsd:documentation>Definición del código DANE para identificación de una entidad territorial: Alfanumérico con máximo 8 caracteres</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
-      <xsd:pattern value="[A-Za-z0-9]{1,8}"/>
+      <xsd:pattern value="[A-Za-z0-9]{1,8}" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="dorp_str_CodigoFondo">
@@ -57,7 +59,7 @@
       <xsd:documentation>Definición del código de Fondos: Alfanumérico con máximo 5 caracteres</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
-      <xsd:pattern value="[A-Za-z0-9]{1,5}"/>
+      <xsd:pattern value="[A-Za-z0-9]{1,5}" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="dorp_str_Anio">
@@ -65,9 +67,9 @@
       <xsd:documentation>Definición de formato año de GEL-XML</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
-      <xsd:minLength value="4"/>
-      <xsd:maxLength value="4"/>
-      <xsd:pattern value="[0-9]{4}"/>
+      <xsd:minLength value="4" />
+      <xsd:maxLength value="4" />
+      <xsd:pattern value="[0-9]{4}" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="dorp_Valor">
@@ -75,10 +77,10 @@
       <xsd:documentation>Tipo de dato que restringe valores que permite el manejo de valores positivos con 15 posiciones enteras y 2 decimales, y es mayor que cero</xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:decimal">
-      <xsd:totalDigits value="17"/>
-      <xsd:maxInclusive value="999999999999999.99"/>
-      <xsd:fractionDigits value="2"/>
-      <xsd:minInclusive value="0"/>
+      <xsd:totalDigits value="17" />
+      <xsd:maxInclusive value="999999999999999.99" />
+      <xsd:fractionDigits value="2" />
+      <xsd:minInclusive value="0" />
     </xsd:restriction>
   </xsd:simpleType>
 </xsd:schema>

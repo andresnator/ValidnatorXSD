@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibData.Models
 {
-
     [Table("RestriccionesColumna", Schema = "VLD")]
     public class RestriccionesColumna
     {
@@ -16,6 +15,12 @@ namespace LibData.Models
             Columnas = new List<Columna>();
         }
 
+        #region Relaciones
+
+        public List<Columna> Columnas { get; set; }
+
+        #endregion
+
         #region Columnas
 
         public long RestriccionesColumnaId { get; set; }
@@ -23,7 +28,7 @@ namespace LibData.Models
         #region Comunes (Aplica para todo tipo de dato)
 
         /// <summary>
-        /// Nombre de la resctricción 
+        ///     Nombre de la resctricción
         /// </summary>
         [Required(ErrorMessage = "Campo Requerido")]
         [StringLength(20, ErrorMessage = "Cantidad Máxima de 20 caracteres")]
@@ -31,7 +36,8 @@ namespace LibData.Models
         public string ComunNombre { get; set; }
 
         /// <summary>
-        /// Descripcion donde se guardara el tipo de resctricción con el objetivo que esta parametrización pueda volver a ser usada
+        ///     Descripcion donde se guardara el tipo de resctricción con el objetivo que esta parametrización pueda volver a ser
+        ///     usada
         /// </summary>
         [Required(ErrorMessage = "Campo Requerido")]
         [StringLength(256, ErrorMessage = "Cantidad Máxima de 256 caracteres")]
@@ -92,14 +98,8 @@ namespace LibData.Models
         public string DatePattern { get; set; }
         public bool? DateWhiteSpace { get; set; }
 
-
         #endregion
 
         #endregion
-
-        #region Relaciones
-        public List<Columna> Columnas { get; set; }
-        #endregion
-
     }
 }

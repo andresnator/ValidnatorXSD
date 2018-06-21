@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LibData.Models
 {
-
     [Table("ArchivosProgramados", Schema = "VLD")]
     public class ArchivosProgramados
     {
@@ -21,12 +20,15 @@ namespace LibData.Models
 
         public long ArchivosProgramadosId { get; set; }
 
-        [Required(ErrorMessage = "Campo Requerido"), StringLength(400, ErrorMessage = "Cantidad Máxima de 300 caracteres")]
-        [Column(TypeName = "varchar"), Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Campo Requerido")]
+        [StringLength(400, ErrorMessage = "Cantidad Máxima de 300 caracteres")]
+        [Column(TypeName = "varchar")]
+        [Display(Name = "Nombre")]
         public string UrlArchivoCargado { get; set; }
 
         [StringLength(400, ErrorMessage = "Cantidad Máxima de 300 caracteres")]
-        [Column(TypeName = "varchar"), Display(Name = "Nombre")]
+        [Column(TypeName = "varchar")]
+        [Display(Name = "Nombre")]
         public string UrlArchivoErrores { get; set; }
 
         public DateTime FechaProgramacion { get; set; }
@@ -52,9 +54,6 @@ namespace LibData.Models
 
         public List<ErroresArchivos> ErroresArchivos { get; set; }
 
-
         #endregion
-
-
     }
 }

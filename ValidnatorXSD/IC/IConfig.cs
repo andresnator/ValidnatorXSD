@@ -9,9 +9,9 @@ namespace ValidenatorXSD.DTO
 
         XmlSchema shemaXml { get; set; }
 
-        EnumsValidatorXSD.SeparatorsColumn separatorColumn { get; set; }
+        EnumsValidatorXsd.SeparatorsColumn separatorColumn { get; set; }
 
-        EnumsValidatorXSD.TypeFile typeFile { get; set; }
+        EnumsValidatorXsd.TypeFile typeFile { get; set; }
 
         int cantColumns { get; set; }
 
