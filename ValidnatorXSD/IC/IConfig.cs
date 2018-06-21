@@ -1,7 +1,7 @@
 ﻿using System.Xml.Schema;
 using ValidenatorXSD.Const;
 
-namespace ValidenatorXSD.DTO
+namespace ValidenatorXSD.IC
 {
     public interface IConfig
     {
@@ -9,9 +9,9 @@ namespace ValidenatorXSD.DTO
 
         XmlSchema shemaXml { get; set; }
 
-        EnumsValidatorXsd.SeparatorsColumn separatorColumn { get; set; }
+        EnumsValidnatorXsd.SeparatorsColumn separatorColumn { get; set; }
 
-        EnumsValidatorXsd.TypeFile typeFile { get; set; }
+        EnumsValidnatorXsd.TypeFile typeFile { get; set; }
 
         int cantColumns { get; set; }
 

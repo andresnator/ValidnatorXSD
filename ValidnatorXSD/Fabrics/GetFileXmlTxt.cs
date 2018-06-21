@@ -2,7 +2,7 @@
 using System.Xml.Linq;
 using ValidenatorXSD.IC;
 
-namespace ValidenatorXSD
+namespace ValidenatorXSD.Fabrics
 {
     internal class GetFileXmlTxt : IGetFileXml
     {

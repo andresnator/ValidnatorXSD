@@ -13,17 +13,17 @@ namespace ValidenatorXSD.Fabrics
         {
         }
 
-        public GetFileXmlFabric(EnumsValidatorXsd.TypeFile typeFile)
+        public GetFileXmlFabric(EnumsValidnatorXsd.TypeFile typeFile)
         {
             switch (typeFile)
             {
-                case EnumsValidatorXsd.TypeFile.Xls:
+                case EnumsValidnatorXsd.TypeFile.Xls:
                     break;
-                case EnumsValidatorXsd.TypeFile.Xlsx:
+                case EnumsValidnatorXsd.TypeFile.Xlsx:
                     break;
-                case EnumsValidatorXsd.TypeFile.Csv:
+                case EnumsValidnatorXsd.TypeFile.Csv:
                     break;
-                case EnumsValidatorXsd.TypeFile.Txt:
+                case EnumsValidnatorXsd.TypeFile.Txt:
                     instance = new GetFileXmlTxt();
                     break;
                 default:

@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Const\EnumsValidatorXsd.cs" />
+    <Compile Include="Const\EnumsValidnatorXsd.cs" />
     <Compile Include="DTO\ConfigDto.cs" />
     <Compile Include="Fabrics\GetFileXmlFabric.cs" />
     <Compile Include="Fabrics\GetFileXmlTxt.cs" />

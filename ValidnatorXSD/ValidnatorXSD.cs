@@ -1,4 +1,5 @@
 ﻿using ValidenatorXSD.DTO;
+using ValidenatorXSD.IC;
 
 namespace ValidenatorXSD
 {
@@ -9,6 +10,11 @@ namespace ValidenatorXSD
         public ValidnatorXSD(IConfig config)
         {
             _config = config;
+        }
+
+
+        public static async void Start()
+        {
         }
     }
 }
