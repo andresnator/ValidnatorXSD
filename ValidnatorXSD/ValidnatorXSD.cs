@@ -1,7 +1,6 @@
-﻿using ValidenatorXSD.DTO;
-using ValidenatorXSD.IC;
+﻿using ValidnatorXSD.IC;
 
-namespace ValidenatorXSD
+namespace ValidnatorXSD
 {
     public class ValidnatorXSD
     {

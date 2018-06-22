@@ -1,20 +1,20 @@
 ﻿using System.Xml.Schema;
-using ValidenatorXSD.Const;
+using ValidnatorXSD.Const;
 
-namespace ValidenatorXSD.IC
+namespace ValidnatorXSD.IC
 {
     public interface IConfig
     {
-        string pathFile { get; set; }
+        string PathFile { get; set; }
 
-        XmlSchema shemaXml { get; set; }
+        XmlSchema ShemaXml { get; set; }
 
-        EnumsValidnatorXsd.SeparatorsColumn separatorColumn { get; set; }
+        EnumsValidnatorXsd.SeparatorsColumn SeparatorColumn { get; set; }
 
-        EnumsValidnatorXsd.TypeFile typeFile { get; set; }
+        EnumsValidnatorXsd.TypeFile TypeFile { get; set; }
 
-        int cantColumns { get; set; }
+        int CantColumns { get; set; }
 
-        int? cantRows { get; set; }
+        int? CantRows { get; set; }
     }
 }

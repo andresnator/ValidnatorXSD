@@ -30,7 +30,7 @@ namespace LibValidadorXSD
         /// <returns></returns>
         public List<Resultados> ValidarXml(string stringXmlDatos, XmlSchemaSet schemaDinamico)
         {
-            XmlReaderSettings settings = new XmlReaderSettings
+            var settings = new XmlReaderSettings
             {
                 ValidationType = ValidationType.Schema,
                 Schemas = schemaDinamico
@@ -47,20 +47,11 @@ namespace LibValidadorXSD
                     ValCampo = string.Empty;
 
 
-                    if (_reader.NodeType.Equals(XmlNodeType.Text))
-                    {
-                        ValCampo = _reader.Value;
-                    }
+                    if (_reader.NodeType.Equals(XmlNodeType.Text)) ValCampo = _reader.Value;
 
-                    if (!_reader.NodeType.Equals(XmlNodeType.Element))
-                    {
-                        continue;
-                    }
+                    if (!_reader.NodeType.Equals(XmlNodeType.Element)) continue;
 
-                    if (_reader.Name == "item")
-                    {
-                        _contador++;
-                    }
+                    if (_reader.Name == "item") _contador++;
                 }
 
                 _reader.Close();
@@ -85,14 +76,11 @@ namespace LibValidadorXSD
 
         private void CallBackValidacion(object sender, ValidationEventArgs e)
         {
-            string mensaje = "";
+            var mensaje = "";
             if (e.Exception.InnerException != null)
             {
                 mensaje = e.Message;
-                if (e.Message == string.Empty)
-                {
-                    mensaje = e.Exception.InnerException.Message;
-                }
+                if (e.Message == string.Empty) mensaje = e.Exception.InnerException.Message;
             }
 
             //_miRespuesta.Add(

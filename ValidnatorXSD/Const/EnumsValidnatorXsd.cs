@@ -1,6 +1,5 @@
-﻿namespace ValidenatorXSD.Const
+﻿namespace ValidnatorXSD.Const
 {
-
     public static class EnumsValidnatorXsd
     {
         public enum SeparatorsColumn

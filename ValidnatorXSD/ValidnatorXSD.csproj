@@ -7,8 +7,8 @@
     <ProjectGuid>{FC2E02AB-598D-49F7-BA95-AC658ED7005F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ValidenatorXSD</RootNamespace>
-    <AssemblyName>ValidenatorXSD</AssemblyName>
+    <RootNamespace>ValidnatorXSD</RootNamespace>
+    <AssemblyName>ValidnatorXSD</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,18 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\GetDataFile.cs" />
+    <Compile Include="Const\Comun.cs" />
     <Compile Include="Const\EnumsValidnatorXsd.cs" />
+    <Compile Include="Const\Messages.cs" />
     <Compile Include="DTO\ConfigDto.cs" />
-    <Compile Include="Fabrics\GetFileXmlFabric.cs" />
-    <Compile Include="Fabrics\GetFileXmlTxt.cs" />
+    <Compile Include="BL\GetFileXml.cs" />
     <Compile Include="IC\IConfig.cs" />
     <Compile Include="IC\IGetFileXml.cs" />
+    <Compile Include="Models\DataFile.cs" />
+    <Compile Include="Models\RowDataFileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidnatorXSD.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,9 +1,9 @@
 ﻿using System.Xml.Linq;
 
-namespace ValidenatorXSD.IC
+namespace ValidnatorXSD.IC
 {
     internal interface IGetFileXml
     {
-        XElement ConvertFileXml(string urlFile);
+        XElement ConvertFileXml(IConfig featureFile);
     }
 }

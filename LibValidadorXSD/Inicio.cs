@@ -39,7 +39,7 @@ namespace LibValidadorXSD
         /// <returns>El archivo programado en formato XML</returns>
         private string ObtenerArchivoXml(ArchivosProgramados archivoProgramado)
         {
-            string[] data = File
+            var data = File
                 .ReadAllLines(Path.Combine(archivoProgramado.UrlArchivoCargado),
                     Encoding.UTF8); // datos leidos del archivo
             //var data = File.ReadAllLines(archivoProgramado.UrlArchivoCargado);// datos leidos del archivo
@@ -48,8 +48,8 @@ namespace LibValidadorXSD
             //Path.Combine(Server.MapPath("~/Archivos/Programados"), nombre);
             long contador = 1;
             long contador2;
-            char separador = Convert.ToChar(archivoProgramado.Archivo.Separador); // Separador del archivo  plano
-            int cantidadColumnasHabilitadas =
+            var separador = Convert.ToChar(archivoProgramado.Archivo.Separador); // Separador del archivo  plano
+            var cantidadColumnasHabilitadas =
                 archivoProgramado.Archivo.CantidadColumnasHabilitadas; // cantidad de columnas habilitadas
 
 
@@ -82,12 +82,9 @@ namespace LibValidadorXSD
                     Mensaje = "Cantidad Columnas: " + r.cantColumnas + " fila:" + r.fila + " datos: " + r.datosString
                 });
 
-            if (!datosCantidadOk.Any())
-            {
-                return "";
-            }
+            if (!datosCantidadOk.Any()) return "";
 
-            XElement linqDinamico = new XElement("clase",
+            var linqDinamico = new XElement("clase",
                 from item in datosCantidadOk
                 select new XElement("item", from r in item.datos
                     select new XElement("columna" + r.cont, r.valor)));
@@ -121,10 +118,7 @@ namespace LibValidadorXSD
         private ArchivosProgramados ActualizarEstadosEjecucion(ArchivosProgramados archivoProgramado,
             Models.EEstadosArchivos estado)
         {
-            if (archivoProgramado != null)
-            {
-                archivoProgramado.EstadosArchivos = estado;
-            }
+            if (archivoProgramado != null) archivoProgramado.EstadosArchivos = estado;
 
             _context.SaveChanges();
 
@@ -153,10 +147,10 @@ namespace LibValidadorXSD
 
         private void CrearTxtErrores(ArchivosProgramados archivoProgramado)
         {
-            string urlErrores = string.Empty;
-            string nombreArchivo = string.Empty;
+            var urlErrores = string.Empty;
+            var nombreArchivo = string.Empty;
 
-            string[] errores = _context.ErroresArchivos
+            var errores = _context.ErroresArchivos
                 .Where(c => c.ArchivosProgramadosId == archivoProgramado.ArchivosProgramadosId)
                 .Select(c => c.Mensaje)
                 .ToArray();
@@ -170,9 +164,9 @@ namespace LibValidadorXSD
             }
 
 
-            using (ContextValidadorBd ctx = new ContextValidadorBd())
+            using (var ctx = new ContextValidadorBd())
             {
-                ArchivosProgramados auxArchivoProgramado =
+                var auxArchivoProgramado =
                     ctx.ArchivosProgramados.Find(archivoProgramado.ArchivosProgramadosId);
                 if (auxArchivoProgramado != null)
                 {
@@ -192,7 +186,7 @@ namespace LibValidadorXSD
         /// </summary>
         private void RegistrarErrores()
         {
-            List<ErroresArchivos> errores = _resultadosList.Select(c => new ErroresArchivos
+            var errores = _resultadosList.Select(c => new ErroresArchivos
             {
                 Fila = c.Fila,
                 Columna = c.Columna,
@@ -200,15 +194,12 @@ namespace LibValidadorXSD
                 Mensaje = c.Mensaje
             }).ToList();
 
-            if (errores.Count <= 0)
-            {
-                return;
-            }
+            if (errores.Count <= 0) return;
 
 
             if (errores.Count < 5000)
             {
-                using (ContextValidadorBd ctx = new ContextValidadorBd())
+                using (var ctx = new ContextValidadorBd())
                 {
                     ctx.ErroresArchivos.AddRange(errores);
                     ctx.SaveChanges();
@@ -216,17 +207,14 @@ namespace LibValidadorXSD
             }
             else
             {
-                List<ErroresArchivos> list = new List<ErroresArchivos>();
-                foreach (ErroresArchivos error in errores)
+                var list = new List<ErroresArchivos>();
+                foreach (var error in errores)
                 {
                     list.Add(error);
 
-                    if (list.Count <= 5000)
-                    {
-                        continue;
-                    }
+                    if (list.Count <= 5000) continue;
 
-                    using (ContextValidadorBd ctx = new ContextValidadorBd())
+                    using (var ctx = new ContextValidadorBd())
                     {
                         ctx.ErroresArchivos.AddRange(list);
                         ctx.SaveChanges();
@@ -244,7 +232,7 @@ namespace LibValidadorXSD
         {
             RestriccionesColumna result;
 
-            using (ContextValidadorBd ctx = new ContextValidadorBd())
+            using (var ctx = new ContextValidadorBd())
             {
                 result = ctx.RestriccionesColumnas.Find(restriccionesId);
             }
@@ -260,18 +248,16 @@ namespace LibValidadorXSD
         /// <returns>El Esquema XML contra el que se va a validar</returns>
         private XmlSchema ConstruirSchema(ArchivosProgramados archivo)
         {
-            List<Columna> columnas = archivo.Archivo.Columna.OrderBy(c => c.Orden).ToList();
+            var columnas = archivo.Archivo.Columna.OrderBy(c => c.Orden).ToList();
 
-            foreach (Columna columna in columnas)
+            foreach (var columna in columnas)
                 if (columna.RestriccionesColumnaId != null)
-                {
                     columna.RestriccionesColumna = ObtenerRestricciones((long) columna.RestriccionesColumnaId);
-                }
 
 
-            XmlSchemaElement elementInital = new XmlSchemaElement {Name = "clase"};
+            var elementInital = new XmlSchemaElement {Name = "clase"};
 
-            XmlSchemaElement elementItem = new XmlSchemaElement
+            var elementItem = new XmlSchemaElement
             {
                 Name = "item",
                 MinOccurs = Models.MinOccurs,
@@ -279,19 +265,19 @@ namespace LibValidadorXSD
                 SchemaTypeName = new XmlQualifiedName("items", "")
             };
 
-            XmlSchemaComplexType complexTypeColumnas = new XmlSchemaComplexType {Name = "items"};
-            XmlSchemaSequence secuenciasColumnas = new XmlSchemaSequence();
+            var complexTypeColumnas = new XmlSchemaComplexType {Name = "items"};
+            var secuenciasColumnas = new XmlSchemaSequence();
 
 
-            IEnumerable<XmlSchemaElement> xmlSchemaElemen = ColumnasXmlSchemaElement(columnas);
-            XmlSchemaComplexType customerType = new XmlSchemaComplexType();
-            XmlSchemaSequence sequence = new XmlSchemaSequence();
+            var xmlSchemaElemen = ColumnasXmlSchemaElement(columnas);
+            var customerType = new XmlSchemaComplexType();
+            var sequence = new XmlSchemaSequence();
 
-            XmlSchema shema = new XmlSchema();
-            XmlSchemaSet schemaSet = new XmlSchemaSet();
+            var shema = new XmlSchema();
+            var schemaSet = new XmlSchemaSet();
 
 
-            foreach (XmlSchemaElement xmlSchemaElement in xmlSchemaElemen)
+            foreach (var xmlSchemaElement in xmlSchemaElemen)
                 secuenciasColumnas.Items.Add(xmlSchemaElement);
 
             complexTypeColumnas.Particle = secuenciasColumnas;
@@ -304,7 +290,7 @@ namespace LibValidadorXSD
             shema.Items.Add(elementInital);
             shema.Items.Add(complexTypeColumnas);
 
-            foreach (XmlSchemaSimpleType simpleType in ObtenerSimpleTypes(columnas)) shema.Items.Add(simpleType);
+            foreach (var simpleType in ObtenerSimpleTypes(columnas)) shema.Items.Add(simpleType);
 
             schemaSet.ValidationEventHandler += ValidationCallback;
             schemaSet.Add(shema);
@@ -329,25 +315,19 @@ namespace LibValidadorXSD
         /// <param name="archivoProgramado">Archivo programado </param>
         private void ContrastarSchema(XmlSchema schemaXml, string stringXmlDatos, ArchivosProgramados archivoProgramado)
         {
-            if (stringXmlDatos == string.Empty)
-            {
-                return;
-            }
+            if (stringXmlDatos == string.Empty) return;
 
             bool[] validacionErrores = {true};
-            XmlSchemaSet schemaSet = new XmlSchemaSet();
-            List<Resultados> resultadoList = new List<Resultados>();
+            var schemaSet = new XmlSchemaSet();
+            var resultadoList = new List<Resultados>();
             schemaSet.Add(schemaXml);
 
-            ValidadorXml validadorXml = new ValidadorXml(archivoProgramado);
+            var validadorXml = new ValidadorXml(archivoProgramado);
 
-            if (validacionErrores[0])
-            {
-                resultadoList = validadorXml.ValidarXml(stringXmlDatos, schemaSet);
-            }
+            if (validacionErrores[0]) resultadoList = validadorXml.ValidarXml(stringXmlDatos, schemaSet);
 
 
-            foreach (Resultados r in resultadoList) _resultadosList.Add(r);
+            foreach (var r in resultadoList) _resultadosList.Add(r);
 
 
             //return true;
@@ -393,7 +373,7 @@ namespace LibValidadorXSD
 
         private XmlSchemaSimpleTypeRestriction ObtenerSimpleTypeRestriction(Columna columna)
         {
-            XmlSchemaSimpleTypeRestriction respose = new XmlSchemaSimpleTypeRestriction();
+            var respose = new XmlSchemaSimpleTypeRestriction();
 
             switch (columna.RestriccionesColumna.ComunTipoDato)
             {
@@ -424,142 +404,101 @@ namespace LibValidadorXSD
         private void AgregarRestriccionesDate(XmlSchemaSimpleTypeRestriction respose, Columna columna)
         {
             if (columna.RestriccionesColumna.DateMaxInclusive != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaMaxInclusiveFacet
                 {
                     Value = columna.RestriccionesColumna.DateMaxInclusive
                 });
-            }
 
 
             if (columna.RestriccionesColumna.DateMinInclusive != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaMinInclusiveFacet
                 {
                     Value = columna.RestriccionesColumna.DateMinInclusive
                 });
-            }
 
             if (columna.RestriccionesColumna.DatePattern != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaPatternFacet {Value = columna.RestriccionesColumna.DatePattern});
-            }
 
-            bool? b = !columna.RestriccionesColumna.DateWhiteSpace;
-            if (b != null && (bool) b)
-            {
-                respose.Facets.Add(new XmlSchemaWhiteSpaceFacet {Value = "collapse"});
-            }
+            var b = !columna.RestriccionesColumna.DateWhiteSpace;
+            if (b != null && (bool) b) respose.Facets.Add(new XmlSchemaWhiteSpaceFacet {Value = "collapse"});
         }
 
         private void AgregarRestriccionesDecimal(XmlSchemaSimpleTypeRestriction respose, Columna columna)
         {
             if (columna.RestriccionesColumna.DecimalTotalDigits != null)
-            {
                 respose.Facets.Add(new XmlSchemaTotalDigitsFacet
                 {
                     Value = columna.RestriccionesColumna.DecimalTotalDigits.ToString()
                 });
-            }
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.DecimalMaxInclusive)) // != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaMaxInclusiveFacet
                 {
                     Value = columna.RestriccionesColumna.DecimalMaxInclusive
                 });
-            }
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.DecimalMinInclusive)) // != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaMinInclusiveFacet
                 {
                     Value = columna.RestriccionesColumna.DecimalMinInclusive
                 });
-            }
 
             if (columna.RestriccionesColumna.DecimalFractionDigits != null)
-            {
                 respose.Facets.Add(new XmlSchemaFractionDigitsFacet
                 {
                     Value = columna.RestriccionesColumna.DecimalFractionDigits.ToString()
                 });
-            }
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.DecimalPattern))
-            {
                 respose.Facets.Add(new XmlSchemaPatternFacet {Value = columna.RestriccionesColumna.DecimalPattern});
-            }
 
-            bool? b = !columna.RestriccionesColumna.DecimalWhiteSpace;
-            if (b != null && (bool) b)
-            {
-                respose.Facets.Add(new XmlSchemaWhiteSpaceFacet {Value = "collapse"});
-            }
+            var b = !columna.RestriccionesColumna.DecimalWhiteSpace;
+            if (b != null && (bool) b) respose.Facets.Add(new XmlSchemaWhiteSpaceFacet {Value = "collapse"});
         }
 
         private void AgregarRestriccionesEntero(XmlSchemaSimpleTypeRestriction respose, Columna columna)
         {
             if (columna.RestriccionesColumna.IntMaxInclusive != null)
-            {
                 respose.Facets.Add(new XmlSchemaMaxInclusiveFacet
                 {
                     Value = columna.RestriccionesColumna.IntMaxInclusive.ToString()
                 });
-            }
 
 
             if (columna.RestriccionesColumna.IntMinInclusive != null)
-            {
                 respose.Facets.Add(new XmlSchemaMinInclusiveFacet
                 {
                     Value = columna.RestriccionesColumna.IntMinInclusive.ToString()
                 });
-            }
 
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.IntPattern)) // != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaPatternFacet {Value = columna.RestriccionesColumna.IntPattern});
-            }
 
-            bool? b = !columna.RestriccionesColumna.IntWhiteSpace;
+            var b = !columna.RestriccionesColumna.IntWhiteSpace;
             if (b != null && (bool) b)
-            {
                 respose.Facets.Add(new XmlSchemaWhiteSpaceFacet
                 {
                     Value = "collapse"
                 }); // Quita todos los espacion en blanco, retornos de carro, etc
-            }
         }
 
         private void AgregarRestriccionesString(XmlSchemaSimpleTypeRestriction respose, Columna columna)
         {
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.StringLength)) // != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaLengthFacet {Value = columna.RestriccionesColumna.StringLength});
-            }
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.StringMaxLength)) //!= string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaMaxLengthFacet {Value = columna.RestriccionesColumna.StringMaxLength});
-            }
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.StringMinLength)) // != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaMinLengthFacet {Value = columna.RestriccionesColumna.StringMinLength});
-            }
 
             if (!string.IsNullOrEmpty(columna.RestriccionesColumna.StringPattern)) // != string.Empty)
-            {
                 respose.Facets.Add(new XmlSchemaPatternFacet {Value = columna.RestriccionesColumna.StringPattern});
-            }
 
-            bool? b = !columna.RestriccionesColumna.StringWhiteSpace;
-            if (b != null && (bool) b)
-            {
-                respose.Facets.Add(new XmlSchemaWhiteSpaceFacet {Value = "collapse"});
-            }
+            var b = !columna.RestriccionesColumna.StringWhiteSpace;
+            if (b != null && (bool) b) respose.Facets.Add(new XmlSchemaWhiteSpaceFacet {Value = "collapse"});
         }
     }
 }
