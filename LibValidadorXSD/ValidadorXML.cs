@@ -36,6 +36,7 @@ namespace LibValidadorXSD
                 Schemas = schemaDinamico
             };
 
+
             settings.ValidationEventHandler += CallBackValidacion;
             _reader = XmlReader.Create(new StringReader(stringXmlDatos), settings);
 

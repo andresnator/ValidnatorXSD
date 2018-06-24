@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ibm850"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="container">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="row" type="rows" minOccurs="1" maxOccurs="4000000" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="rows">
+    <xs:sequence>
+      <xs:element name="col1" type="s_columna1" />
+      <xs:element name="col2" type="s_columna2" />
+      <xs:element name="col3" type="s_columna3" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="s_columna1">
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="10" />
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s_columna2">
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="10" />
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="s_columna3">
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="10" />
+      <xs:minInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

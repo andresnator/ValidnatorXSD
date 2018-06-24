@@ -1,4 +1,4 @@
-﻿using System.Xml.Schema;
+﻿using System.Xml;
 using ValidnatorXSD.Const;
 
 namespace ValidnatorXSD.IC
@@ -7,7 +7,7 @@ namespace ValidnatorXSD.IC
     {
         string PathFile { get; set; }
 
-        XmlSchema ShemaXml { get; set; }
+        XmlTextReader ShemaReader { get; set; }
 
         EnumsValidnatorXsd.SeparatorsColumn SeparatorColumn { get; set; }
 
