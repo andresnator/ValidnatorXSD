@@ -2,7 +2,14 @@
 {
     public static class EnumsValidnatorXsd
     {
-        public enum SeparatorsColumn
+        public enum ResponseType
+        {
+            Data,
+            Xlsx,
+            Txt
+        }
+
+        public enum SeparatorColumn
         {
             Comma = ',',
             Dott = '.',
@@ -12,10 +19,7 @@
 
         public enum TypeFile
         {
-            //Xls,
-            //Xlsx,
-            Csv
-            //Txt
+            CsvOrTxt
         }
     }
 }

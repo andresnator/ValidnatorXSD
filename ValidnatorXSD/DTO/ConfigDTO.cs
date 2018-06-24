@@ -8,8 +8,9 @@ namespace ValidnatorXSD.DTO
     {
         public string PathFile { get; set; }
         public XmlTextReader ShemaReader { get; set; }
-        public EnumsValidnatorXsd.SeparatorsColumn SeparatorColumn { get; set; }
+        public EnumsValidnatorXsd.SeparatorColumn SeparatorColumn { get; set; }
         public EnumsValidnatorXsd.TypeFile TypeFile { get; set; }
+        public EnumsValidnatorXsd.ResponseType ResponseType { get; set; }
         public int QuantityColumns { get; set; }
         public int? QuantityRows { get; set; }
     }

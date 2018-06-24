@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Web.Script.Serialization;
 using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ValidnatorXSD;
 using ValidnatorXSD.BL;
 using ValidnatorXSD.Const;
 using ValidnatorXSD.DTO;
@@ -17,20 +20,22 @@ namespace ValidenatorXSDTest
         {
             _paramValid = new ConfigDto
             {
-                SeparatorColumn = EnumsValidnatorXsd.SeparatorsColumn.Semicolon,
+                SeparatorColumn = EnumsValidnatorXsd.SeparatorColumn.Semicolon,
                 PathFile = @"C:\Users\Administrador\Documents\fileTestValid.csv",
-                TypeFile = EnumsValidnatorXsd.TypeFile.Csv,
+                TypeFile = EnumsValidnatorXsd.TypeFile.CsvOrTxt,
                 QuantityColumns = 3,
                 QuantityRows = 16
             };
 
             _paramNotValid = new ConfigDto
             {
-                SeparatorColumn = EnumsValidnatorXsd.SeparatorsColumn.Semicolon,
+                SeparatorColumn = EnumsValidnatorXsd.SeparatorColumn.Semicolon,
                 PathFile = @"C:\Users\Administrador\Documents\fileTestNotValid.csv",
-                TypeFile = EnumsValidnatorXsd.TypeFile.Csv,
+                TypeFile = EnumsValidnatorXsd.TypeFile.CsvOrTxt,
                 QuantityColumns = 3,
-                QuantityRows = 15
+                QuantityRows = 15,
+                ShemaReader = new XmlTextReader(
+                    @"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd")
             };
         }
 
@@ -166,5 +171,25 @@ namespace ValidenatorXSDTest
             var result = instanceTwo.GetColumnsErrorQuantity(data);
             Assert.IsTrue(result.Count > 0);
         }
+
+
+
+        [TestMethod]
+        public void StartValidate()
+        {
+            //arrange
+            //var reader = new XmlTextReader(@"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd");
+
+            //_paramNotValid.ShemaReader = reader;
+            var instance = new ValidnatorXsd(_paramNotValid);
+
+            //act
+            var result = instance.Start();
+
+            //assert
+            Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
+            Assert.IsNotNull(result);
+        }
+
     }
 }

@@ -9,9 +9,11 @@ namespace ValidnatorXSD.IC
 
         XmlTextReader ShemaReader { get; set; }
 
-        EnumsValidnatorXsd.SeparatorsColumn SeparatorColumn { get; set; }
+        EnumsValidnatorXsd.SeparatorColumn SeparatorColumn { get; set; }
 
         EnumsValidnatorXsd.TypeFile TypeFile { get; set; }
+
+        EnumsValidnatorXsd.ResponseType ResponseType { get; set; }
 
         int QuantityColumns { get; set; }
 
