@@ -1,36 +1,43 @@
-<?xml version="1.0" encoding="ibm850"?>
+<?xml version="1.0" encoding="utf-8"?>
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="container">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="row" type="rows" minOccurs="1" maxOccurs="4000000" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:complexType name="rows">
-    <xs:sequence>
-      <xs:element name="col1" type="s_columna1" />
-      <xs:element name="col2" type="s_columna2" />
-      <xs:element name="col3" type="s_columna3" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="s_columna1">
-    <xs:restriction base="xs:integer">
-      <xs:maxInclusive value="10" />
-      <xs:minInclusive value="1" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="s_columna2">
-    <xs:restriction base="xs:integer">
-      <xs:maxInclusive value="10" />
-      <xs:minInclusive value="1" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="s_columna3">
-    <xs:restriction base="xs:integer">
-      <xs:maxInclusive value="10" />
-      <xs:minInclusive value="1" />
-    </xs:restriction>
-  </xs:simpleType>
-</xs:schema>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2" id="idTipoCargaDistribucionEnt">
+  <xsd:element name="container">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="row" type="rows" minOccurs="1" maxOccurs="4000000" />
+      </xsd:sequence>
+    </xsd:complexType>
+    <xsd:unique name="LlaveItemDistribucion">
+      <xsd:selector xpath="row" />
+      <xsd:field xpath="col1" />
+      <xsd:field xpath="col2" />
+      <xsd:field xpath="col3" />
+    </xsd:unique>
+  </xsd:element>
+  <xsd:complexType name="rows">
+    <xsd:sequence>
+      <xsd:element name="col1" type="s_columna1" />
+      <xsd:element name="col2" type="s_columna2" />
+      <xsd:element name="col3" type="s_columna3" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:simpleType name="s_columna1">
+    <xsd:restriction base="xsd:integer">
+      <xsd:maxInclusive value="10000" />
+      <xsd:minInclusive value="1" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="s_columna2">
+    <xsd:restriction base="xsd:integer">
+      <xsd:maxInclusive value="10000" />
+      <xsd:minInclusive value="1" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="s_columna3">
+    <xsd:restriction base="xsd:integer">
+      <xsd:maxInclusive value="10000" />
+      <xsd:minInclusive value="1" />
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

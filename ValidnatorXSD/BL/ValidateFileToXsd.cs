@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web.Script.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -58,17 +56,29 @@ namespace ValidnatorXSD.BL
             var mensaje = string.Empty;
             if (e.Exception.InnerException != null)
             {
-                mensaje = e.Message;
-                if (e.Message == string.Empty) mensaje = e.Exception.InnerException.Message;
+                mensaje = e.Exception.InnerException.Message;
+                if (mensaje == string.Empty) mensaje = e.Message;
+            }
+            else
+            {
+                if (mensaje == string.Empty) mensaje = e.Message;
             }
 
+            if (_reader.Name.Contains(ComunConst.Column))
+                _miRespuesta.Add(new ResponseErrorsModel
+                {
+                    ColumnPos = Convert.ToInt64(_reader.Name.Replace(ComunConst.Column, "")),
+                    RowPos = _contador,
+                    Message = mensaje
+                });
 
-            _miRespuesta.Add(new ResponseErrorsModel
-            {
-                ColumnPos = Convert.ToInt64(_reader.Name.Replace(ComunConst.Column, "")),
-                RowPos = _contador,
-                Message = mensaje
-            });
+
+            if (_reader.Name.Contains(ComunConst.Row))
+                _miRespuesta.Add(new ResponseErrorsModel
+                {
+                    RowPos = _contador,
+                    Message = mensaje
+                });
         }
     }
 }
