@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2"
-            id="idTipoCargaDistribucionEnt">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2" id="idXsd">
   <xsd:element name="container">
     <xsd:complexType>
       <xsd:sequence>
@@ -17,24 +16,24 @@
   </xsd:element>
   <xsd:complexType name="rows">
     <xsd:sequence>
-      <xsd:element name="col1" type="s_columna1" />
-      <xsd:element name="col2" type="s_columna2" />
-      <xsd:element name="col3" type="s_columna3" />
+      <xsd:element name="col1" type="s_col1" />
+      <xsd:element name="col2" type="s_col2" />
+      <xsd:element name="col3" type="s_col3" />
     </xsd:sequence>
   </xsd:complexType>
-  <xsd:simpleType name="s_columna1">
+  <xsd:simpleType name="s_col1">
     <xsd:restriction base="xsd:integer">
       <xsd:maxInclusive value="10000" />
       <xsd:minInclusive value="1" />
     </xsd:restriction>
   </xsd:simpleType>
-  <xsd:simpleType name="s_columna2">
+  <xsd:simpleType name="s_col2">
     <xsd:restriction base="xsd:integer">
       <xsd:maxInclusive value="10000" />
       <xsd:minInclusive value="1" />
     </xsd:restriction>
   </xsd:simpleType>
-  <xsd:simpleType name="s_columna3">
+  <xsd:simpleType name="s_col3">
     <xsd:restriction base="xsd:integer">
       <xsd:maxInclusive value="10000" />
       <xsd:minInclusive value="1" />
