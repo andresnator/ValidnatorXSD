@@ -10,7 +10,7 @@ namespace ValidnatorXSD.DTO
         public XmlTextReader ShemaReader { get; set; }
         public EnumsValidnatorXsd.SeparatorsColumn SeparatorColumn { get; set; }
         public EnumsValidnatorXsd.TypeFile TypeFile { get; set; }
-        public int CantColumns { get; set; }
-        public int? CantRows { get; set; }
+        public int QuantityColumns { get; set; }
+        public int? QuantityRows { get; set; }
     }
 }

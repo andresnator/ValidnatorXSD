@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -12,19 +13,21 @@ namespace ValidnatorXSD.BL
 {
     public class ValidateFileToXsd
     {
-        private readonly List<ResponseErrorsModel> _miRespuesta;
+        private readonly IConfig _config;
+        private readonly List<ResponseErrorsModel> _errors;
         private long _contador;
         private XmlReader _reader;
 
 
-        public ValidateFileToXsd()
+        public ValidateFileToXsd(IConfig config)
         {
-            _miRespuesta = new List<ResponseErrorsModel>();
+            _errors = new List<ResponseErrorsModel>();
+            _config = config;
         }
 
-        public List<ResponseErrorsModel> ValidXml(IConfig config, XElement dataFile)
+        public List<ResponseErrorsModel> GetErrorsFromXmlFile(XElement dataFile)
         {
-            var myschema = XmlSchema.Read(config.ShemaReader, null);
+            var myschema = XmlSchema.Read(_config.ShemaReader, null);
 
 
             var booksSettings = new XmlReaderSettings();
@@ -47,7 +50,7 @@ namespace ValidnatorXSD.BL
             _reader.Close();
 
 
-            return _miRespuesta;
+            return _errors;
         }
 
 
@@ -65,7 +68,7 @@ namespace ValidnatorXSD.BL
             }
 
             if (_reader.Name.Contains(ComunConst.Column))
-                _miRespuesta.Add(new ResponseErrorsModel
+                _errors.Add(new ResponseErrorsModel
                 {
                     ColumnPos = Convert.ToInt64(_reader.Name.Replace(ComunConst.Column, "")),
                     RowPos = _contador,
@@ -74,11 +77,46 @@ namespace ValidnatorXSD.BL
 
 
             if (_reader.Name.Contains(ComunConst.Row))
-                _miRespuesta.Add(new ResponseErrorsModel
+                _errors.Add(new ResponseErrorsModel
                 {
                     RowPos = _contador,
                     Message = mensaje
                 });
+        }
+
+        public bool ValidQuantityColumns(List<DataFileModel> dataFileModels)
+        {
+            var quantityColumns = _config.QuantityColumns;
+            return dataFileModels.All(c => c.QuantityColumns == quantityColumns);
+        }
+
+        public List<ResponseErrorsModel> GetColumnsErrorQuantity(List<DataFileModel> dataFileModels)
+        {
+            var quantityColumns = _config.QuantityColumns;
+
+
+            return dataFileModels.Where(c => c.QuantityColumns != quantityColumns).Select(r => new ResponseErrorsModel
+            {
+                RowPos = r.RowNumber,
+                Message = string.Format(Messages.FileErrorQuantityColumns, r.RowNumber.ToString(),
+                    r.QuantityColumns.ToString())
+            }).ToList();
+        }
+
+        public bool ValidQuantityRows(List<DataFileModel> dataFileModels)
+        {
+            var quantityRows = _config.QuantityRows;
+            return !dataFileModels.Any(r => r.RowNumber > quantityRows);
+        }
+
+        public ResponseErrorsModel GetRowsErrorQuantity(List<DataFileModel> dataFileModels)
+        {
+            var countRows = dataFileModels.Count;
+
+            return new ResponseErrorsModel
+            {
+                Message = string.Format(Messages.FileErrorQuantityRows, _config.PathFile, countRows)
+            };
         }
     }
 }

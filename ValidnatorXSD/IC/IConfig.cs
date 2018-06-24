@@ -13,8 +13,8 @@ namespace ValidnatorXSD.IC
 
         EnumsValidnatorXsd.TypeFile TypeFile { get; set; }
 
-        int CantColumns { get; set; }
+        int QuantityColumns { get; set; }
 
-        int? CantRows { get; set; }
+        int? QuantityRows { get; set; }
     }
 }

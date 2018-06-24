@@ -5,7 +5,7 @@ namespace ValidnatorXSD.Models
     public class DataFileModel
     {
         public long RowNumber { get; set; }
-        public int CantColumns { get; set; }
+        public int QuantityColumns { get; set; }
         public string DataRow { get; set; }
         public long InitCounterCol { get; set; }
 

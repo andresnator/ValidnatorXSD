@@ -8,7 +8,7 @@
         <xsd:element name="row" type="rows" minOccurs="1" maxOccurs="4000000" />
       </xsd:sequence>
     </xsd:complexType>
-    <xsd:unique name="LlaveItemDistribucion">
+    <xsd:unique name="keyUnique">
       <xsd:selector xpath="row" />
       <xsd:field xpath="col1" />
       <xsd:field xpath="col2" />

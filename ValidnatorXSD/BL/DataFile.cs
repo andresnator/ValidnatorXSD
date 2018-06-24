@@ -12,22 +12,30 @@ namespace ValidnatorXSD.BL
 {
     public class DataFile
     {
-        public List<DataFileModel> GetDataFileModelList(IConfig fileFeature)
-        {
-            if (!File.Exists(fileFeature.PathFile))
-                throw new ArgumentException(string.Format(Messages.FileNotExist, fileFeature.PathFile));
+        private readonly IConfig _fileFeature;
 
-            var file = File.ReadAllLines(Path.Combine(fileFeature.PathFile), Encoding.UTF8);
+        public DataFile(IConfig fileFeature)
+        {
+            _fileFeature = fileFeature;
+        }
+
+        public List<DataFileModel> GetDataFileModelList()
+        {
+            if (!File.Exists(_fileFeature.PathFile))
+                throw new ArgumentException(string.Format(Messages.FileNotExist, _fileFeature.PathFile));
+
+            var file = File.ReadAllLines(Path.Combine(_fileFeature.PathFile), Encoding.UTF8);
+            
             long counterRow = 1;
             long counterCol;
-            var separador = (char) fileFeature.SeparatorColumn;
+            var separador = (char) _fileFeature.SeparatorColumn;
 
             //todo refactor .Take
             var dataFile = (from fileAux in file.Take(20000)
                 select new DataFileModel
                 {
                     RowNumber = counterRow++,
-                    CantColumns = fileAux.Split(separador).Length,
+                    QuantityColumns = fileAux.Split(separador).Length,
                     DataRow = fileAux,
                     InitCounterCol = counterCol = 1,
                     ItemsRow = (from fileAuxIn in fileAux.Split(separador).ToList()
@@ -41,7 +49,7 @@ namespace ValidnatorXSD.BL
         }
 
 
-        public XElement GetFileToXElement(IConfig fileFeature, List<DataFileModel> dataFile)
+        public XElement GetXElementFromData(List<DataFileModel> dataFile)
         {
             var resultXml = new XElement(ComunConst.Table,
                 from item in dataFile
