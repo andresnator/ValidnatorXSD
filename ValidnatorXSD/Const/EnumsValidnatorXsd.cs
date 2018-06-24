@@ -12,10 +12,10 @@
 
         public enum TypeFile
         {
-            Xls,
-            Xlsx,
+            //Xls,
+            //Xlsx,
             Csv,
-            Txt
+            //Txt
         }
     }
 }

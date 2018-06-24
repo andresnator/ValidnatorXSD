@@ -51,8 +51,8 @@
     <Compile Include="Const\Messages.cs" />
     <Compile Include="DTO\ConfigDto.cs" />
     <Compile Include="IC\IConfig.cs" />
-    <Compile Include="Models\DataFile.cs" />
-    <Compile Include="Models\Resultados.cs" />
+    <Compile Include="Models\DataFileModel.cs" />
+    <Compile Include="Models\ResponseErrorsModel.cs" />
     <Compile Include="Models\RowDataFileModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidnatorXSD.cs" />

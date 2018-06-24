@@ -14,17 +14,17 @@ namespace ValidnatorXSD.BL
 {
     public class ValidateFileToXsd
     {
-        private readonly List<Resultados> _miRespuesta;
+        private readonly List<ResponseErrorsModel> _miRespuesta;
         private long _contador;
         private XmlReader _reader;
 
 
         public ValidateFileToXsd()
         {
-            _miRespuesta = new List<Resultados>();
+            _miRespuesta = new List<ResponseErrorsModel>();
         }
 
-        public List<Resultados> ValidXml(IConfig config, XElement dataFile)
+        public List<ResponseErrorsModel> ValidXml(IConfig config, XElement dataFile)
         {
             var myschema = XmlSchema.Read(config.ShemaReader, null);
 
@@ -48,7 +48,6 @@ namespace ValidnatorXSD.BL
 
             _reader.Close();
 
-            var resultado = new JavaScriptSerializer().Serialize(_miRespuesta.Take(20));
 
             return _miRespuesta;
         }
@@ -64,7 +63,7 @@ namespace ValidnatorXSD.BL
             }
 
 
-            _miRespuesta.Add(new Resultados
+            _miRespuesta.Add(new ResponseErrorsModel
             {
                 ColumnPos = Convert.ToInt64(_reader.Name.Replace(ComunConst.Column, "")),
                 RowPos = _contador,

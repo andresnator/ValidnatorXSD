@@ -17,7 +17,7 @@ namespace ValidenatorXSDTest
             {
                 SeparatorColumn = EnumsValidnatorXsd.SeparatorsColumn.Semicolon,
                 PathFile = @"C:\Users\Administrador\Documents\fileTest.csv",
-                TypeFile = EnumsValidnatorXsd.TypeFile.Txt
+                TypeFile = EnumsValidnatorXsd.TypeFile.Csv
             };
         }
 
@@ -29,7 +29,7 @@ namespace ValidenatorXSDTest
             var instance = new DataFile();
 
             //act
-            var result = instance.ConvertFileXml(param, new DataFile().GetDataFileModel(param));
+            var result = instance.GetFileToXElement(param, new DataFile().GetDataFileModelList(param));
 
             //assert
             Assert.IsNotNull(result);
@@ -44,7 +44,7 @@ namespace ValidenatorXSDTest
             var instance = new DataFile();
 
             //act
-            var result = instance.GetDataFileModel(param);
+            var result = instance.GetDataFileModelList(param);
 
             //assert
             Assert.IsNotNull(result);
@@ -66,7 +66,7 @@ namespace ValidenatorXSDTest
 
             //act
             var result = instance.ValidXml(param,
-                new DataFile().ConvertFileXml(param, new DataFile().GetDataFileModel(param)));
+                new DataFile().GetFileToXElement(param, new DataFile().GetDataFileModelList(param)));
 
             //assert
             Assert.IsNotNull(result);

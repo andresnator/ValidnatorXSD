@@ -1,6 +1,6 @@
 ﻿namespace ValidnatorXSD.Models
 {
-    public class Resultados
+    public class ResponseErrorsModel
     {
         public string Message { get; set; }
         public long ColumnPos { get; set; }

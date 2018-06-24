@@ -12,7 +12,7 @@ namespace ValidnatorXSD.BL
 {
     public class DataFile
     {
-        public List<DataFileModel> GetDataFileModel(IConfig fileFeature)
+        public List<DataFileModel> GetDataFileModelList(IConfig fileFeature)
         {
             if (!File.Exists(fileFeature.PathFile))
                 throw new ArgumentException(string.Format(Messages.FileNotExist, fileFeature.PathFile));
@@ -41,7 +41,7 @@ namespace ValidnatorXSD.BL
         }
 
 
-        public XElement ConvertFileXml(IConfig fileFeature, List<DataFileModel> dataFile)
+        public XElement GetFileToXElement(IConfig fileFeature, List<DataFileModel> dataFile)
         {
             var resultXml = new XElement(ComunConst.Table,
                 from item in dataFile
