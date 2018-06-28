@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.Linq;
+using System.Xml.Linq;
+using ClosedXML.Excel;
 using ValidnatorXSD.BL;
+using ValidnatorXSD.Const;
 using ValidnatorXSD.IC;
 using ValidnatorXSD.Models;
 
@@ -19,29 +22,83 @@ namespace ValidnatorXSD
 
         public List<ResponseErrorsModel> Start()
         {
-
             if (_config.ShemaReader == null)
             {
                 throw new ArgumentException("Not Found 'ShemaReader' ");
             }
-            var responseErrors = new List<ResponseErrorsModel>();
 
-            var data = new DataFile(_config).GetDataFileModelList();
-            var validRowsQuantity = new ValidateFileToXsd(_config).ValidQuantityRows(data);
-            var validQuantityColumns = new ValidateFileToXsd(_config).ValidQuantityColumns(data);
+            List<ResponseErrorsModel> responseErrors = new List<ResponseErrorsModel>();
 
-            var xmElementFromData = new DataFile(_config).GetXElementFromData(data);
+            List<DataFileModel> data = new DataFile(_config).GetDataFileModelList();
+            bool validRowsQuantity = new ValidateFileToXsd(_config).ValidQuantityRows(data);
+            bool validQuantityColumns = new ValidateFileToXsd(_config).ValidQuantityColumns(data);
 
-            var errorsValidate = new ValidateFileToXsd(_config).GetErrorsFromXmlFile(xmElementFromData);
+            XElement xmElementFromData = new DataFile(_config).GetXElementFromData(data);
+
+            List<ResponseErrorsModel> errorsValidate =
+                new ValidateFileToXsd(_config).GetErrorsFromXmlFile(xmElementFromData);
 
             responseErrors.AddRange(errorsValidate);
 
-            if (!validRowsQuantity) responseErrors.Add(new ValidateFileToXsd(_config).GetRowsErrorQuantity(data));
+            if (!validRowsQuantity)
+            {
+                responseErrors.Add(new ValidateFileToXsd(_config).GetRowsErrorQuantity(data));
+            }
 
             if (!validQuantityColumns)
+            {
                 responseErrors.AddRange(new ValidateFileToXsd(_config).GetColumnsErrorQuantity(data));
+            }
 
             return responseErrors;
+        }
+
+        public XLWorkbook StartExcel()
+        {
+            XLWorkbook wb = new XLWorkbook();
+            IXLWorksheet ws = wb.Worksheets.Add(ComunConst.ErrorSheet);
+            List<ResponseErrorsModel> dataError = Start();
+            List<DataFileModel> data = new DataFile(_config).GetDataFileModelList();
+
+
+            data.ForEach(r =>
+            {
+                List<ResponseErrorsModel> errorFile =
+                    dataError.AsParallel().Where(x => x.RowPos == r.RowNumber).ToList();
+
+                r.ItemsRow.ForEach(c =>
+                {
+                    ws.Cell(r.RowNumber, c.CounterCol).SetValue(c.ValueCol);
+
+                    if (!errorFile.Any())
+                    {
+                        return;
+                    }
+
+                    errorFile.Where(d => d.ColumnPos == null && !string.IsNullOrEmpty(d.Message)).ToList()
+                        .ForEach(e =>
+                        {
+                            ws.Cell(r.RowNumber, c.CounterCol).Comment.SetAuthor(Messages.ErrorComment).AddSignature()
+                                .AddText(e.Message).AddNewLine();
+                            ws.Cell(r.RowNumber, c.CounterCol).Comment.Style.Size.SetAutomaticSize();
+                            ws.Cell(r.RowNumber, c.CounterCol).Style.Fill.BackgroundColor = XLColor.Cyan;
+                        });
+
+                    errorFile.Where(d => d.ColumnPos == c.CounterCol && !string.IsNullOrEmpty(d.Message)).ToList()
+                        .ForEach(e =>
+                        {
+                            ws.Cell(r.RowNumber, c.CounterCol).Comment.SetAuthor(Messages.ErrorComment).AddSignature()
+                                .AddText(e.Message).AddNewLine();
+                            ws.Cell(r.RowNumber, c.CounterCol).Comment.Style.Size.SetAutomaticSize();
+                            ws.Cell(r.RowNumber, c.CounterCol).Style.Fill.BackgroundColor = XLColor.Yellow;
+                        });
+                });
+            });
+
+            ws.Columns().AdjustToContents();
+            ws.Rows().AdjustToContents();
+
+            return wb;
         }
     }
 }

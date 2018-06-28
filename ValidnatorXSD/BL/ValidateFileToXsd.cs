@@ -15,7 +15,7 @@ namespace ValidnatorXSD.BL
     {
         private readonly IConfig _config;
         private readonly List<ResponseErrorsModel> _errors;
-        private long _contador;
+        private int _contador;
         private XmlReader _reader;
 
 
@@ -70,7 +70,7 @@ namespace ValidnatorXSD.BL
             if (_reader.Name.Contains(ComunConst.Column))
                 _errors.Add(new ResponseErrorsModel
                 {
-                    ColumnPos = Convert.ToInt64(_reader.Name.Replace(ComunConst.Column, "")),
+                    ColumnPos = Convert.ToInt32(_reader.Name.Replace(ComunConst.Column, "")),
                     RowPos = _contador,
                     Message = mensaje
                 });
@@ -99,7 +99,7 @@ namespace ValidnatorXSD.BL
             {
                 RowPos = r.RowNumber,
                 Message = string.Format(Messages.FileErrorQuantityColumns, r.RowNumber.ToString(),
-                    r.QuantityColumns.ToString())
+                    r.QuantityColumns.ToString()),
             }).ToList();
         }
 

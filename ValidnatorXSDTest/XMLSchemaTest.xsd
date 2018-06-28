@@ -28,6 +28,9 @@
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="s_col2">
+    <xsd:annotation>
+      <xsd:documentation>Definición del código de Fondos: Alfanumérico con máximo 5 caracteres</xsd:documentation>
+    </xsd:annotation>
     <xsd:restriction base="xsd:integer">
       <xsd:maxInclusive value="10000" />
       <xsd:minInclusive value="1" />

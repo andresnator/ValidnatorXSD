@@ -4,10 +4,10 @@ namespace ValidnatorXSD.Models
 {
     public class DataFileModel
     {
-        public long RowNumber { get; set; }
+        public int RowNumber { get; set; }
         public int QuantityColumns { get; set; }
         public string DataRow { get; set; }
-        public long InitCounterCol { get; set; }
+        public int InitCounterCol { get; set; }
 
         public List<RowDataFileModel> ItemsRow { get; set; }
     }

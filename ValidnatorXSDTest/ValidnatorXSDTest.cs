@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Web.Script.Serialization;
 using System.Xml;
+using ClosedXML.Excel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ValidnatorXSD;
 using ValidnatorXSD.BL;
@@ -188,6 +189,29 @@ namespace ValidenatorXSDTest
 
             //assert
             Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
+            Assert.IsNotNull(result);
+        }
+
+
+
+
+        [TestMethod]
+        public void StartValidateToExcel()
+        {
+            //arrange
+            //var reader = new XmlTextReader(@"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd");
+
+            //_paramNotValid.ShemaReader = reader;
+            var instance = new ValidnatorXsd(_paramNotValid);
+
+            //act
+            XLWorkbook result = instance.StartExcel();
+
+
+            result.SaveAs(@"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\testFileResult.xlsx");
+
+            //assert
+            //Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
             Assert.IsNotNull(result);
         }
 

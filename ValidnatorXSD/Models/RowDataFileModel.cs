@@ -4,6 +4,6 @@
     {
         public string ValueCol { get; set; }
 
-        public long CounterCol { get; set; }
+        public int CounterCol { get; set; }
     }
 }

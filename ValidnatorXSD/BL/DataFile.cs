@@ -25,9 +25,9 @@ namespace ValidnatorXSD.BL
                 throw new ArgumentException(string.Format(Messages.FileNotExist, _fileFeature.PathFile));
 
             var file = File.ReadAllLines(Path.Combine(_fileFeature.PathFile), Encoding.UTF8);
-            
-            long counterRow = 1;
-            long counterCol;
+
+            int counterRow = 1;
+            int counterCol;
             var separador = (char) _fileFeature.SeparatorColumn;
 
             //todo refactor .Take
