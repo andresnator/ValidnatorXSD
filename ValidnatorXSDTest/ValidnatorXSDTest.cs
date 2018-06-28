@@ -21,7 +21,7 @@ namespace ValidenatorXSDTest
             _paramValid = new ConfigDto
             {
                 SeparatorColumn = EnumsValidnatorXsd.SeparatorColumn.Semicolon,
-                PathFile = @"C:\Users\Administrador\Documents\fileTestValid.csv",
+                PathFile = @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\fileTestOk.csv",
                 TypeFile = EnumsValidnatorXsd.TypeFile.CsvOrTxt,
                 QuantityColumns = 3,
                 QuantityRows = 16
@@ -30,12 +30,12 @@ namespace ValidenatorXSDTest
             _paramNotValid = new ConfigDto
             {
                 SeparatorColumn = EnumsValidnatorXsd.SeparatorColumn.Semicolon,
-                PathFile = @"C:\Users\Administrador\Documents\fileTestNotValid.csv",
+                PathFile = @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\fileTestError.csv",
                 TypeFile = EnumsValidnatorXsd.TypeFile.CsvOrTxt,
                 QuantityColumns = 3,
                 QuantityRows = 15,
                 ShemaReader = new XmlTextReader(
-                    @"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd")
+                    @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd")
             };
         }
 
@@ -75,7 +75,7 @@ namespace ValidenatorXSDTest
             //arrange
             var reader =
                 new XmlTextReader(
-                    @"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd");
+                    @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd");
 
             _paramValid.ShemaReader = reader;
 

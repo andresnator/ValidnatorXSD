@@ -63,6 +63,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="fileTestError.csv" />
+    <None Include="fileTestOk.csv" />
     <None Include="XMLSchemaTest.xsd">
       <SubType>Designer</SubType>
     </None>
