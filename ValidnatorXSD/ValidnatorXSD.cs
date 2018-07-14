@@ -10,6 +10,9 @@ using ValidnatorXSD.Models;
 
 namespace ValidnatorXSD
 {
+
+    
+
     public class ValidnatorXsd
     {
         private readonly IConfig _config;
@@ -28,7 +31,6 @@ namespace ValidnatorXSD
             }
 
             List<ResponseErrorsModel> responseErrors = new List<ResponseErrorsModel>();
-
             List<DataFileModel> data = new DataFile(_config).GetDataFileModelList();
             bool validRowsQuantity = new ValidateFileToXsd(_config).ValidQuantityRows(data);
             bool validQuantityColumns = new ValidateFileToXsd(_config).ValidQuantityColumns(data);
@@ -57,14 +59,31 @@ namespace ValidnatorXSD
         {
             XLWorkbook wb = new XLWorkbook();
             IXLWorksheet ws = wb.Worksheets.Add(ComunConst.ErrorSheet);
-            List<ResponseErrorsModel> dataError = Start();
+
+
+
+            List<ResponseErrorsModel> dataError = new List<ResponseErrorsModel>();
             List<DataFileModel> data = new DataFile(_config).GetDataFileModelList();
+            bool validRowsQuantity = new ValidateFileToXsd(_config).ValidQuantityRows(data);
+            bool validQuantityColumns = new ValidateFileToXsd(_config).ValidQuantityColumns(data);
+
+            XElement xmElementFromData = new DataFile(_config).GetXElementFromData(data);
+
+            List<ResponseErrorsModel> errorsValidate =
+                new ValidateFileToXsd(_config).GetErrorsFromXmlFile(xmElementFromData);
+
+            dataError.AddRange(errorsValidate);
 
 
-            data.ForEach(r =>
+
+
+            data.ToList().ForEach(r =>
             {
                 List<ResponseErrorsModel> errorFile =
-                    dataError.AsParallel().Where(x => x.RowPos == r.RowNumber).ToList();
+                    dataError.Where(x => x.RowPos == r.RowNumber).ToList();
+
+
+
 
                 r.ItemsRow.ForEach(c =>
                 {

@@ -17,12 +17,14 @@ namespace ValidenatorXSDTest
         private readonly ConfigDto _paramNotValid;
         private readonly ConfigDto _paramValid;
 
+        public string _path { get; set; } = @"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\";
+
         public ValidnatorXsdTest()
         {
             _paramValid = new ConfigDto
             {
                 SeparatorColumn = EnumsValidnatorXsd.SeparatorColumn.Semicolon,
-                PathFile = @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\fileTestOk.csv",
+                PathFile = $"{_path}fileTestOk.csv",
                 TypeFile = EnumsValidnatorXsd.TypeFile.CsvOrTxt,
                 QuantityColumns = 3,
                 QuantityRows = 16
@@ -31,12 +33,11 @@ namespace ValidenatorXSDTest
             _paramNotValid = new ConfigDto
             {
                 SeparatorColumn = EnumsValidnatorXsd.SeparatorColumn.Semicolon,
-                PathFile = @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\fileTestError.csv",
+                PathFile = $"{_path}fileTestError.csv",
                 TypeFile = EnumsValidnatorXsd.TypeFile.CsvOrTxt,
                 QuantityColumns = 3,
                 QuantityRows = 15,
-                ShemaReader = new XmlTextReader(
-                    @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd")
+                ShemaReader = new XmlTextReader($"{_path}XMLSchemaTest.xsd")
             };
         }
 
@@ -75,8 +76,7 @@ namespace ValidenatorXSDTest
         {
             //arrange
             var reader =
-                new XmlTextReader(
-                    @"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd");
+                new XmlTextReader($"{_path}XMLSchemaTest.xsd");
 
             _paramValid.ShemaReader = reader;
 
@@ -179,7 +179,6 @@ namespace ValidenatorXSDTest
         public void StartValidate()
         {
             //arrange
-            //var reader = new XmlTextReader(@"C:\Users\Administrador\source\repos\ValidnatorXSD\ValidnatorXSDTest\XMLSchemaTest.xsd");
 
             //_paramNotValid.ShemaReader = reader;
             var instance = new ValidnatorXsd(_paramNotValid);
@@ -188,7 +187,7 @@ namespace ValidenatorXSDTest
             var result = instance.Start();
 
             //assert
-            Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
+            //Debug.WriteLine(new JavaScriptSerializer().Serialize(result));
             Assert.IsNotNull(result);
         }
 
@@ -208,7 +207,7 @@ namespace ValidenatorXSDTest
             XLWorkbook result = instance.StartExcel();
 
 
-            result.SaveAs(@"C:\Users\jgonzalg\Source\Repos\ValidnatorXSD\ValidnatorXSDTest\testFileResult.xlsx");
+            result.SaveAs($"{_path}testFileResult.xlsx");
 
             //assert
             //Debug.WriteLine(new JavaScriptSerializer().Serialize(result));

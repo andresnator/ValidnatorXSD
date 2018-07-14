@@ -26,25 +26,37 @@ namespace ValidnatorXSD.BL
 
             var file = File.ReadAllLines(Path.Combine(_fileFeature.PathFile), Encoding.UTF8);
 
+
             int counterRow = 1;
             int counterCol;
-            var separador = (char) _fileFeature.SeparatorColumn;
+            var separador = (char)_fileFeature.SeparatorColumn;
 
-            //todo refactor .Take
-            var dataFile = (from fileAux in file.Take(20000)
-                select new DataFileModel
-                {
-                    RowNumber = counterRow++,
-                    QuantityColumns = fileAux.Split(separador).Length,
-                    DataRow = fileAux,
-                    InitCounterCol = counterCol = 1,
-                    ItemsRow = (from fileAuxIn in fileAux.Split(separador).ToList()
-                        select new RowDataFileModel
-                        {
-                            ValueCol = fileAuxIn,
-                            CounterCol = counterCol++
-                        }).ToList()
-                }).ToList();
+            
+            var length = file.Count() / ComunConst.PaginateSize;
+            var pageSize = ComunConst.PaginateSize;
+
+            List<DataFileModel> dataFile = new List<DataFileModel>();
+            for (int page = 0; page <= length; page++)
+            {
+                var dataFilePaginate = (from fileAux in file.Skip((page) * pageSize).Take(pageSize)
+                 select new DataFileModel
+                 {
+                     RowNumber = counterRow++,
+                     QuantityColumns = fileAux.Split(separador).Length,
+                     DataRow = fileAux,
+                     InitCounterCol = counterCol = 1,
+                     ItemsRow = (from fileAuxIn in fileAux.Split(separador).ToList()
+                                 select new RowDataFileModel
+                                 {
+                                     ValueCol = fileAuxIn,
+                                     CounterCol = counterCol++
+                                 }).ToList()
+                 }).ToList();
+
+                dataFile.AddRange(dataFilePaginate);
+            }
+
+
             return dataFile;
         }
 
@@ -54,7 +66,7 @@ namespace ValidnatorXSD.BL
             var resultXml = new XElement(ComunConst.Table,
                 from item in dataFile
                 select new XElement(ComunConst.Row, from ir in item.ItemsRow
-                    select new XElement(ComunConst.Column + ir.CounterCol, ir.ValueCol)));
+                                                    select new XElement(ComunConst.Column + ir.CounterCol, ir.ValueCol)));
 
             return resultXml;
         }
