@@ -13,5 +13,6 @@ namespace ValidnatorXSD.DTO
         public EnumsValidnatorXsd.ResponseType ResponseType { get; set; }
         public int QuantityColumns { get; set; }
         public int? QuantityRows { get; set; }
+        public string PathFileCsv { get; set; }
     }
 }

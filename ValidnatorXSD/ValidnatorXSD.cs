@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using ClosedXML.Excel;
+using CsvHelper;
 using ValidnatorXSD.BL;
 using ValidnatorXSD.Const;
 using ValidnatorXSD.IC;
@@ -118,6 +120,21 @@ namespace ValidnatorXSD
             ws.Rows().AdjustToContents();
 
             return wb;
+        }
+
+
+        public string StartCsv()
+        {
+            var errorsValidate = Start();
+
+            using (var strem = new StreamWriter(_config.PathFileCsv) )
+            {
+
+                var csv = new CsvWriter(strem);
+                csv.WriteRecords(errorsValidate);
+
+            }
+            return _config.PathFileCsv;
         }
     }
 }

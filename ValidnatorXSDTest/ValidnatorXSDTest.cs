@@ -214,5 +214,19 @@ namespace ValidenatorXSDTest
             Assert.IsNotNull(result);
         }
 
+
+
+        [TestMethod]
+        public void StartValidateToCsv()
+        {
+            //arrange
+            var instance = new ValidnatorXsd(_paramNotValid);
+
+            //act
+            var result = instance.StartCsv();
+
+            //assert
+            Assert.IsNotNull(result);
+        }
     }
 }

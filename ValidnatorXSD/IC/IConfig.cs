@@ -18,5 +18,7 @@ namespace ValidnatorXSD.IC
         int QuantityColumns { get; set; }
 
         int? QuantityRows { get; set; }
+
+        string PathFileCsv { get; set; }
     }
 }

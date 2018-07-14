@@ -90,8 +90,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fileTestError.csv" />
-    <None Include="fileTestOk.csv" />
     <None Include="packages.config" />
     <None Include="XMLSchemaTest.xsd">
       <SubType>Designer</SubType>
