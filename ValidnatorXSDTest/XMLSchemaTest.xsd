@@ -1,45 +1,129 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2" id="idXsd">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.2" id="id">
+  <xsd:annotation>
+    <xsd:documentation>Title One</xsd:documentation>
+  </xsd:annotation>
   <xsd:element name="container">
+    <xsd:annotation>
+      <xsd:documentation>Title Two</xsd:documentation>
+    </xsd:annotation>
     <xsd:complexType>
       <xsd:sequence>
-        <xsd:element name="row" type="rows" minOccurs="1" maxOccurs="4000000" />
+        <xsd:element name="row" type="rows" maxOccurs="40000">
+          <xsd:annotation>
+            <xsd:documentation source="col1">xxx</xsd:documentation>
+          </xsd:annotation>
+        </xsd:element>
       </xsd:sequence>
     </xsd:complexType>
-    <xsd:unique name="keyUnique">
-      <xsd:selector xpath="row" />
-      <xsd:field xpath="col1" />
-      <xsd:field xpath="col2" />
-      <xsd:field xpath="col3" />
+    <xsd:unique name="PKItem">
+      <xsd:selector xpath="itemPK" />
+      <xsd:field xpath="s_col1" />
+      <xsd:field xpath="s_col2" />
+      <xsd:field xpath="s_col3" />
     </xsd:unique>
   </xsd:element>
   <xsd:complexType name="rows">
+    <xsd:annotation>
+      <xsd:documentation>xxxx</xsd:documentation>
+    </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="col1" type="s_col1" />
-      <xsd:element name="col2" type="s_col2" />
-      <xsd:element name="col3" type="s_col3" />
+      <xsd:element name="col1" type="s_col1">
+        <xsd:annotation>
+          <xsd:documentation>xxxxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="col2" type="s_col2">
+        <xsd:annotation>
+          <xsd:documentation>xxxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="col3" type="s_col3">
+        <xsd:annotation>
+          <xsd:documentation>xxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="col4" type="s_col4">
+        <xsd:annotation>
+          <xsd:documentation>xxxxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="col5" type="s_col5">
+        <xsd:annotation>
+          <xsd:documentation>xxxxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="col6" type="s_col6">
+        <xsd:annotation>
+          <xsd:documentation>xxxxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="col7" type="s_col7">
+        <xsd:annotation>
+          <xsd:documentation>xxxx</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:simpleType name="s_col1">
-    <xsd:restriction base="xsd:integer">
-      <xsd:maxInclusive value="10000" />
-      <xsd:minInclusive value="1" />
+    <xsd:annotation>
+      <xsd:documentation source="col1">error</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{2}" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="s_col2">
     <xsd:annotation>
-      <xsd:documentation>Definición del código de Fondos: Alfanumérico con máximo 5 caracteres</xsd:documentation>
+      <xsd:documentation source="col2">error</xsd:documentation>
     </xsd:annotation>
-    <xsd:restriction base="xsd:integer">
-      <xsd:maxInclusive value="10000" />
-      <xsd:minInclusive value="1" />
+    <xsd:restriction base="xsd:string">
+      <xsd:pattern value="[0-9]{2}" />
     </xsd:restriction>
   </xsd:simpleType>
   <xsd:simpleType name="s_col3">
-    <xsd:restriction base="xsd:integer">
-      <xsd:maxInclusive value="10000" />
-      <xsd:minInclusive value="1" />
+    <xsd:annotation>
+      <xsd:documentation source="col3">error</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:date">
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="s_col4">
+    <xsd:annotation>
+      <xsd:documentation source="col4">error</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:date">
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="s_col5">
+    <xsd:annotation>
+      <xsd:documentation source="col5">error</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:decimal">
+      <xsd:totalDigits value="20" />
+      <xsd:maxInclusive value="999999999999999999.99" />
+      <xsd:fractionDigits value="2" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="s_col6">
+    <xsd:annotation>
+      <xsd:documentation source="col6">error</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="9" />
+      <xsd:pattern value="[0-9]" />
+    </xsd:restriction>
+  </xsd:simpleType>
+  <xsd:simpleType name="s_col7">
+    <xsd:annotation>
+      <xsd:documentation source="col7">error</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:minLength value="1" />
+      <xsd:maxLength value="3" />
+      <xsd:pattern value="[0-9]" />
     </xsd:restriction>
   </xsd:simpleType>
 </xsd:schema>

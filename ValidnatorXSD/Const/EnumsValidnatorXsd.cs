@@ -4,8 +4,6 @@
     {
         public enum ResponseType
         {
-            Data,
-            Xlsx,
             Txt
         }
 
@@ -13,13 +11,14 @@
         {
             Comma = ',',
             Dott = '.',
-            Semicolon = ';'
+            Semicolon = ';',
+            Pipe = '|'
         }
 
 
         public enum TypeFile
         {
-            CsvOrTxt
+            Txt
         }
     }
 }

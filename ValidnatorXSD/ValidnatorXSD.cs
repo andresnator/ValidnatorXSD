@@ -1,140 +1,87 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using ClosedXML.Excel;
-using CsvHelper;
 using ValidnatorXSD.BL;
-using ValidnatorXSD.Const;
 using ValidnatorXSD.IC;
 using ValidnatorXSD.Models;
 
 namespace ValidnatorXSD
 {
-
-    
-
     public class ValidnatorXsd
     {
-        private readonly IConfig _config;
+        private readonly IConfig config;
 
         public ValidnatorXsd(IConfig config)
         {
-            _config = config;
+            this.config = config;
         }
 
 
         public List<ResponseErrorsModel> Start()
         {
-            if (_config.ShemaReader == null)
+            if (config.ShemaReader == null)
             {
                 throw new ArgumentException("Not Found 'ShemaReader' ");
             }
 
             List<ResponseErrorsModel> responseErrors = new List<ResponseErrorsModel>();
-            List<DataFileModel> data = new DataFile(_config).GetDataFileModelList();
-            bool validRowsQuantity = new ValidateFileToXsd(_config).ValidQuantityRows(data);
-            bool validQuantityColumns = new ValidateFileToXsd(_config).ValidQuantityColumns(data);
+            List<DataFileModel> data = new DataFile(config).GetDataFileModelList();
 
-            XElement xmElementFromData = new DataFile(_config).GetXElementFromData(data);
+            bool validRowsQuantity = new ValidateFileToXsd(config).ValidQuantityRows(data);
+            bool validQuantityColumns = new ValidateFileToXsd(config).ValidQuantityColumns(data);
+
+            XElement xmElementFromData = new DataFile(config).GetXElementFromData(data);
 
             List<ResponseErrorsModel> errorsValidate =
-                new ValidateFileToXsd(_config).GetErrorsFromXmlFile(xmElementFromData);
+                new ValidateFileToXsd(config).GetErrorsFromXmlFile(xmElementFromData);
 
             responseErrors.AddRange(errorsValidate);
 
             if (!validRowsQuantity)
             {
-                responseErrors.Add(new ValidateFileToXsd(_config).GetRowsErrorQuantity(data));
+                responseErrors.Add(new ValidateFileToXsd(config).GetRowsErrorQuantity(data));
             }
 
             if (!validQuantityColumns)
             {
-                responseErrors.AddRange(new ValidateFileToXsd(_config).GetColumnsErrorQuantity(data));
+                responseErrors.AddRange(new ValidateFileToXsd(config).GetColumnsErrorQuantity(data));
             }
 
-            return responseErrors;
+            return responseErrors.Distinct().OrderBy(c => c.RowPos).ThenBy(c => c.ColumnPos).ToList();
         }
 
-        public XLWorkbook StartExcel()
+        public List<ResponseErrorsModel> Start(List<DataFileModel> data)
         {
-            XLWorkbook wb = new XLWorkbook();
-            IXLWorksheet ws = wb.Worksheets.Add(ComunConst.ErrorSheet);
+            if (config.ShemaReader == null)
+            {
+                throw new ArgumentException("Not Found 'ShemaReader' ");
+            }
+
+            List<ResponseErrorsModel> responseErrors = new List<ResponseErrorsModel>();
 
 
+            bool validRowsQuantity = new ValidateFileToXsd(config).ValidQuantityRows(data);
+            bool validQuantityColumns = new ValidateFileToXsd(config).ValidQuantityColumns(data);
 
-            List<ResponseErrorsModel> dataError = new List<ResponseErrorsModel>();
-            List<DataFileModel> data = new DataFile(_config).GetDataFileModelList();
-            bool validRowsQuantity = new ValidateFileToXsd(_config).ValidQuantityRows(data);
-            bool validQuantityColumns = new ValidateFileToXsd(_config).ValidQuantityColumns(data);
-
-            XElement xmElementFromData = new DataFile(_config).GetXElementFromData(data);
+            XElement xmElementFromData = new DataFile(config).GetXElementFromData(data);
 
             List<ResponseErrorsModel> errorsValidate =
-                new ValidateFileToXsd(_config).GetErrorsFromXmlFile(xmElementFromData);
+                new ValidateFileToXsd(config).GetErrorsFromXmlFile(xmElementFromData);
 
-            dataError.AddRange(errorsValidate);
+            responseErrors.AddRange(errorsValidate);
 
-
-
-
-            data.ToList().ForEach(r =>
+            if (!validRowsQuantity)
             {
-                List<ResponseErrorsModel> errorFile =
-                    dataError.Where(x => x.RowPos == r.RowNumber).ToList();
-
-
-
-
-                r.ItemsRow.ForEach(c =>
-                {
-                    ws.Cell(r.RowNumber, c.CounterCol).SetValue(c.ValueCol);
-
-                    if (!errorFile.Any())
-                    {
-                        return;
-                    }
-
-                    errorFile.Where(d => d.ColumnPos == null && !string.IsNullOrEmpty(d.Message)).ToList()
-                        .ForEach(e =>
-                        {
-                            ws.Cell(r.RowNumber, c.CounterCol).Comment.SetAuthor(Messages.ErrorComment).AddSignature()
-                                .AddText(e.Message).AddNewLine();
-                            ws.Cell(r.RowNumber, c.CounterCol).Comment.Style.Size.SetAutomaticSize();
-                            ws.Cell(r.RowNumber, c.CounterCol).Style.Fill.BackgroundColor = XLColor.Cyan;
-                        });
-
-                    errorFile.Where(d => d.ColumnPos == c.CounterCol && !string.IsNullOrEmpty(d.Message)).ToList()
-                        .ForEach(e =>
-                        {
-                            ws.Cell(r.RowNumber, c.CounterCol).Comment.SetAuthor(Messages.ErrorComment).AddSignature()
-                                .AddText(e.Message).AddNewLine();
-                            ws.Cell(r.RowNumber, c.CounterCol).Comment.Style.Size.SetAutomaticSize();
-                            ws.Cell(r.RowNumber, c.CounterCol).Style.Fill.BackgroundColor = XLColor.Yellow;
-                        });
-                });
-            });
-
-            ws.Columns().AdjustToContents();
-            ws.Rows().AdjustToContents();
-
-            return wb;
-        }
-
-
-        public string StartCsv()
-        {
-            var errorsValidate = Start();
-
-            using (var strem = new StreamWriter(_config.PathFileCsv) )
-            {
-
-                var csv = new CsvWriter(strem);
-                csv.WriteRecords(errorsValidate);
-
+                responseErrors.Add(new ValidateFileToXsd(config).GetRowsErrorQuantity(data));
             }
-            return _config.PathFileCsv;
+
+            if (!validQuantityColumns)
+            {
+                responseErrors.AddRange(new ValidateFileToXsd(config).GetColumnsErrorQuantity(data));
+            }
+
+            return responseErrors.Distinct().OrderBy(c => c.RowPos).ThenBy(c => c.ColumnPos).ToList();
         }
     }
 }
